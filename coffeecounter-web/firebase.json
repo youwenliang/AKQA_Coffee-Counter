@@ -1,6 +1,6 @@
 {
-  "firebase": "amber-torch-2593",
-  "public": ".",
+  "firebase": "coffee-counter",
+  "public": "app",
   "ignore": [
     "firebase.json",
     "**/.*",
