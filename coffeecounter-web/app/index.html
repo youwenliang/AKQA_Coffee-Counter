@@ -11,6 +11,7 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="fonts/stylesheet.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
@@ -20,43 +21,43 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="header" ng-cloak="">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            <a class="navbar-brand" href="#/">AKQA Coffee Counter</a>
-          </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <!-- //angularfire -->
-              <li><a ng-href="#/chat">chat</a></li>
-
-            </ul>
-          </div>
-        </div>
+    <div class="container text-center" id="content">
+      <div id="section-1">
+        <div id="the"></div>
+        <p class="text-1 curved">Coffee Counter</p>
+        <p class="text-1 akqa">At AKQA</p>
+      </div>
+      <div id="section-2">
+        <p class="text-2 innovation">Innovation Powered by Caffination</p>
+        <span class="line left"></span>
+        <span class="line right"></span>
+      </div>
+      <div id="section-3">
+        <p class="text-2 medium total">Total Cups</p>
+        <div class="text-1 shadow medium" id="totalcups">00378</div>
+        <span class="text-2 medium left">Since</span>
+        <span class="text-2 medium right"><span>0</span><span class="dot">5.</span><span>0</span><span class="dot">1.</span><span>15</span></span>
+      </div>
+      <div id="section-4">
+        <p class="text-1 shadow large" id="todaycups">042</p>
+        <p class="text-2 large">Cups Today</p>
       </div>
     </div>
 
-    <div class="container">
-    <div ng-view=""></div>
+    <div id="black-background"></div>
+
+    <div id="coffee">
+      <div id="coffee-gradient"></div>
     </div>
 
-    <div class="footer">
+    <div id="section-5">
+
+    </div>
+    <!-- <div class="footer">
       <div class="container">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team and Firebase</p>
       </div>
-    </div>
+    </div> -->
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -83,10 +84,17 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/letteringjs/jquery.lettering.js"></script>
+    <script src="bower_components/circletype.js/js/circletype.js"></script>
+    <script src="bower_components/greensock/src/minified/TweenMax.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- plugins -->
+        <script src="scripts/plugins/jquery.spincrement.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js"></script>
+
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/angularfire/config.js"></script>

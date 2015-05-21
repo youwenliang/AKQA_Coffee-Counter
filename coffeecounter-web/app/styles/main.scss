@@ -3,6 +3,14 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+@mixin center-all {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -12,6 +20,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 body {
   padding: 0;
+  font-size: 24pt;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -67,7 +76,168 @@ body {
   }
 }
 
+
+
+
+/* Custom CSS */
+
+#content{
+  padding-top: 70px;
+  color: #FFF;
+  @include center-all;
+  z-index: 1;
+}
+
+#section-1, #section-3, #section-4, #section-5 {
+  opacity: 0;
+}
+
+#section-1{
+  margin-top: -30px;
+}
+
+#section-2{
+  height: 30px;
+}
+
+#section-3{
+  height: 200px;
+}
+
+#section-5{
+  background: #FFF;
+  height: 800px;
+}
+
+#the{
+  background: url("../images/the.png") no-repeat;
+  background-size: contain;
+  width: 176.667px;
+  height: 85px;
+  margin: 0 auto;
+}
+
+.line{
+  width: 80px;
+  border-bottom: #FFF 1px solid;
+  @include center-all;
+  opacity: 0;
+}
+
+.text-1{
+  font-family: 'brothersroman';
+  text-transform: uppercase;
+  -webkit-text-stroke: 2px black;
+  &.akqa{
+    font-size: 1.9em;
+    margin-top:-120px;
+    text-shadow: 2px 2px 0px rgba(159, 127, 0, 1);
+  }
+  &.curved{
+    font-size: 3.6em;
+    text-shadow: 3px 3px 0px rgba(159, 127, 0, 1);
+  }
+  &.shadow{
+    -webkit-text-stroke: 0px black;
+    &.medium{
+      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1), 5px 5px 0px rgba(159, 127, 0, 1), 0px 0px 30px rgba(0, 0, 0, 1);
+      font-size: 6.2em;
+      @include center-all;
+    }
+    &.large{
+      text-shadow: 5px 5px 12px rgba(0, 0, 0, 0.3), 6px 6px 0px rgba(159, 127, 0, 1), 0px 0px 30px rgba(0, 0, 0, 1);
+      font-size: 10.83333em;
+    }
+  }
+}
+
+.text-2{
+  font-family: 'dharma_gothic_m_regularRg';
+  letter-spacing: 0.333em;
+  text-transform: uppercase;
+  text-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
+  &.innovation{
+    font-size: 1.1em;
+    @include center-all;
+    opacity: 0;
+  }
+  &.medium{
+    font-size: 1.5em;
+    &.total{
+      margin-top: 160px;
+    }
+    &.left{
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      left:-150px;
+    }
+    &.right{
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      right: -150px;
+      & .dot{
+        letter-spacing: 2px;
+      }
+    }
+  }
+
+  &.large{
+    font-size: 2.5em;
+    letter-spacing: 0.333em;
+  }
+}
+
+#black-background{
+  background-color: #000;
+  width: 100%;
+  height: 675px;
+}
+
+#coffee-gradient{
+  background:  linear-gradient(rgba(0,0,0, .5), rgba(0, 0, 0, 0));
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  top: 675px;
+}
+
+#coffee{
+  background: url("../images/coffee-bean-bg.jpg") no-repeat;
+  background-size: cover;
+  width: 100%;
+  padding-top: 100%;
+  z-index: -1;
+}
+
 /* Responsive: Portrait tablets and up */
+@media screen and (max-width: 730px) {
+  body{
+    font-size: 8pt;
+  }
+  #content{
+    padding-top: 40px;
+  }
+
+  #the{
+    width: 60.57px;
+    height: 29.14px;
+  }
+  #black-background{
+    height: 285px;
+  }
+  #coffee-gradient{
+    top: 285px;
+  }
+  .text-1.akqa{
+    margin-top:-25px;
+  }
+  .text-2.medium.total{
+    margin-top: 10px;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .container {
     max-width: 730px;

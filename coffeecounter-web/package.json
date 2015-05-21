@@ -1,7 +1,9 @@
 {
   "name": "coffeecounterweb",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "parallaxify": "^0.1.1"
+  },
   "repository": {},
   "devDependencies": {
     "grunt": "^0.4.5",
