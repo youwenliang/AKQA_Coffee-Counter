@@ -11,7 +11,11 @@
     "angular-resource": "^1.3.0",
     "angular-route": "^1.3.0",
     "angular-sanitize": "^1.3.0",
-    "angular-touch": "^1.3.0"
+    "angular-touch": "^1.3.0",
+    "Chart.js": "~1.0.2",
+    "jquery-ui": "~1.11.4",
+    "greensock": "~1.16.1",
+    "circletype.js": "*"
   },
   "devDependencies": {
     "mockfirebase": "0.11.0",

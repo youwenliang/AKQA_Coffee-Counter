@@ -10,6 +10,9 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   left: 0;
   right: 0;
 }
+html{
+  height: 100%;
+}
 
 .browsehappy {
   margin: 0.2em 0;
@@ -21,6 +24,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 body {
   padding: 0;
   font-size: 24pt;
+  background-color: #000;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -43,6 +47,11 @@ body {
     line-height: 40px;
     padding-bottom: 19px;
   }
+}
+
+canvas#myChart{
+  width: 100%;
+  padding: 0 2% 0 2%;
 }
 
 /* Custom page footer */
@@ -105,8 +114,9 @@ body {
 }
 
 #section-5{
-  background: #FFF;
+  background: #FFF !IMPORTANT;
   height: 800px;
+  z-index: 1000;
 }
 
 #the{
@@ -170,16 +180,18 @@ body {
       position: absolute;
       margin-left: auto;
       margin-right: auto;
-      left:-150px;
+      left:-180px;
+      opacity: 0;
     }
     &.right{
       position: absolute;
       margin-left: auto;
       margin-right: auto;
-      right: -150px;
+      right: -210px;
       & .dot{
         letter-spacing: 2px;
       }
+      opacity: 0;
     }
   }
 
@@ -204,10 +216,8 @@ body {
 }
 
 #coffee{
-  background: url("../images/coffee-bean-bg.jpg") no-repeat;
   background-size: cover;
   width: 100%;
-  padding-top: 100%;
   z-index: -1;
 }
 
@@ -225,10 +235,10 @@ body {
     height: 29.14px;
   }
   #black-background{
-    height: 285px;
+    height: 100%;
   }
   #coffee-gradient{
-    top: 285px;
+    top: 100%;
   }
   .text-1.akqa{
     margin-top:-25px;

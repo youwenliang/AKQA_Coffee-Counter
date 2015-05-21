@@ -32,22 +32,22 @@
         <span class="line left"></span>
         <span class="line right"></span>
       </div>
-      <div id="section-3">
+      <div id="section-3" class="hideme">
         <p class="text-2 medium total">Total Cups</p>
-        <div class="text-1 shadow medium" id="totalcups">00378</div>
+        <div class="text-1 shadow medium" id="totalcups">00000</div>
         <span class="text-2 medium left">Since</span>
         <span class="text-2 medium right"><span>0</span><span class="dot">5.</span><span>0</span><span class="dot">1.</span><span>15</span></span>
       </div>
-      <div id="section-4">
-        <p class="text-1 shadow large" id="todaycups">042</p>
+      <div id="section-4" class="hideme">
+        <p class="text-1 shadow large" id="todaycups">000</p>
         <p class="text-2 large">Cups Today</p>
       </div>
     </div>
 
     <div id="black-background"></div>
-
-    <div id="coffee">
-      <div id="coffee-gradient"></div>
+    <div id="coffee-gradient"></div>
+    <div id="coffee" class="parallax-window" data-parallax="scroll" data-image-src="images/coffee-bean-bg.jpg">
+      <canvas class="hideme" id="myChart" width="800" height="400"></canvas>
     </div>
 
     <div id="section-5">
@@ -84,15 +84,20 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+
+    <script src="bower_components/Chart.js/Chart.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/greensock/src/uncompressed/TweenMax.js"></script>
     <script src="bower_components/letteringjs/jquery.lettering.js"></script>
     <script src="bower_components/circletype.js/js/circletype.js"></script>
-    <script src="bower_components/greensock/src/minified/TweenMax.min.js"></script>
+    <script src="bower_components/circletype.js/js/circletype.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <!-- plugins -->
-        <script src="scripts/plugins/jquery.spincrement.js"></script>
+        <script src="scripts/plugins/parallax.js"></script>
+        <script src="scripts/plugins/jquery.shuffleLetters.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js"></script>
 
         <script src="scripts/app.js"></script>
