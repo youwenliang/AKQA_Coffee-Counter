@@ -4,14 +4,11 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // endbower
 
 @mixin center-all {
-  position: absolute;
+  position: absolute !IMPORTANT;;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
-}
-html{
-  height: 100%;
 }
 
 .browsehappy {
@@ -85,6 +82,9 @@ canvas#myChart{
   }
 }
 
+.container {
+  max-width: 100% !IMPORTANT;
+}
 
 
 
@@ -97,7 +97,7 @@ canvas#myChart{
   z-index: 1;
 }
 
-#section-1, #section-3, #section-4, #section-5 {
+#section-1, #section-3, #section-4{
   opacity: 0;
 }
 
@@ -114,11 +114,17 @@ canvas#myChart{
 }
 
 #section-5{
+  display: inline-block;
+  width: 100%;
+  padding: 100px 0;
   background: #FFF !IMPORTANT;
-  height: 800px;
-  z-index: 1000;
+  z-index: 1;
+  color: #000000;
 }
 
+#machines{
+  max-width: 100% !IMPORTANT;
+}
 #the{
   background: url("../images/the.png") no-repeat;
   background-size: contain;
@@ -130,8 +136,16 @@ canvas#myChart{
 .line{
   width: 80px;
   border-bottom: #FFF 1px solid;
-  @include center-all;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
   opacity: 0;
+  &.left{
+    left: 0;
+  }
+  &.right{
+    right: 0;
+  }
 }
 
 .text-1{
@@ -140,10 +154,11 @@ canvas#myChart{
   -webkit-text-stroke: 2px black;
   &.akqa{
     font-size: 1.9em;
-    margin-top:-120px;
     text-shadow: 2px 2px 0px rgba(159, 127, 0, 1);
+    margin-top: 140px;
   }
   &.curved{
+    @include center-all;
     font-size: 3.6em;
     text-shadow: 3px 3px 0px rgba(159, 127, 0, 1);
   }
@@ -180,14 +195,14 @@ canvas#myChart{
       position: absolute;
       margin-left: auto;
       margin-right: auto;
-      left:-180px;
+      left:0;
       opacity: 0;
     }
     &.right{
       position: absolute;
       margin-left: auto;
       margin-right: auto;
-      right: -210px;
+      right: 0;
       & .dot{
         letter-spacing: 2px;
       }
@@ -221,37 +236,74 @@ canvas#myChart{
   z-index: -1;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (max-width: 730px) {
-  body{
-    font-size: 8pt;
-  }
-  #content{
-    padding-top: 40px;
-  }
+#machine-1, #machine-2{
+  background: url("../images/coffee-machine.png") no-repeat;
+  background-size: contain;
+  width: 440px;
+  height: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  left:0;
+  right:0;
+  opacity: 0;
+}
 
+#machine-1{
+  margin-left:-150px;
+}
+
+#machine-2{
+  margin-right:-150px;
+}
+
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (max-width: 1024px) {
+  body{
+    font-size: 14pt;
+  }
+  .line{
+    width: 40px;
+  }
   #the{
     width: 60.57px;
     height: 29.14px;
   }
   #black-background{
-    height: 100%;
+    height: 350px;
   }
   #coffee-gradient{
-    top: 100%;
-  }
-  .text-1.akqa{
-    margin-top:-25px;
+    top: 350px;
   }
   .text-2.medium.total{
-    margin-top: 10px;
+    margin-top: 100px;
+  }
+  .text-1.akqa{
+    margin-top: 100px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  body{
+    font-size: 8pt;
+  }
+  #content{
+    padding-top: 20px;
+  }
+  #section-4{
+    margin-top: 30px !IMPORTANT;
+  }
+  #machine-1, #machine-2{
+    width: 220px;
+    height: 340px;
+  }
+  .text-1.akqa{
+    margin-top: 65px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
 
   /* Remove the padding we set earlier */
   .header,

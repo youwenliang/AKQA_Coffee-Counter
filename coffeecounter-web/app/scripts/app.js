@@ -19,28 +19,17 @@ angular.module('coffeecounterWebApp', [
     'firebase.ref'
   ]);
 
-$(document).ready(function(){
-  /* Animations */
+  var flag_2 = true;
   var flag_3 = true;
   var flag_4 = true;
-
-  var flag2 = true;
-
-  TweenMax.to("#section-1", 1, {marginTop:"+=30px", opacity: "1"});
-  TweenMax.to(".text-2.innovation", 1, {opacity: "1", delay: "1"});
-  TweenMax.to(".line.left", .8, {opacity: "1", marginRight: "-=60px", delay: "1.2"});
-  TweenMax.to(".line.right", .8, {opacity: "1", marginLeft: "-=60px", delay: "1.2"});
-  $('.curved').circleType({radius: 1200});
-  moving();
-  $(window).on('resize', function(){
-    moving();
-  });
+  var flag_5 = true;
 
   /* Charts */
   // Get the context of the canvas element we want to select
   var ctx = document.getElementById("myChart").getContext("2d");
+  var myLineChart;
   var data = {
-    labels: ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM"],
+    labels: ["9 A M", "1 0 A M", "1 1 A M", "1 2 P M", "1 P M", "2 P M", "3 P M", "4 P M", "5 P M", "6 P M", "7 P M", "8 P M"],
     datasets: [
         {
             label: "Coffee Counter I",
@@ -50,7 +39,7 @@ $(document).ready(function(){
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(255,255,255,1)",
-            data: [0, 14, 15, 18, 5, 3, 8, 12, 4, 2, 9, 0]
+            data: [0,0,0,0,0,0,0,0,0,0,0,0]
         },
         {
             label: "Coffee Counter II",
@@ -60,20 +49,21 @@ $(document).ready(function(){
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(255,255,255,1)",
-            data: [0, 18, 5, 3, 14, 4, 2, 15, 8, 12, 9, 0]
+            data: [0,0,0,0,0,0,0,0,0,0,0,0]
         }
     ]
   };
 
   var option = {
     // Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-    scaleBeginAtZero: false,
-
+    scaleBeginAtZero: true,
+    // Interpolated JS string - can access value
+    scaleLabel: "<%if (value != 0){%><%=value%><%}%>",
     // String - Scale label font declaration for the scale label
     scaleFontFamily: "'dharma_gothic_m_regularRg', sans-serif",
 
     // Number - Scale label font size in pixels
-    scaleFontSize: 40,
+    scaleFontSize: 32,
 
     // String - Scale label font weight style
     scaleFontStyle: "normal",
@@ -86,6 +76,11 @@ $(document).ready(function(){
 
     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
     maintainAspectRatio: true,
+
+    // Boolean - Determines whether to draw tooltips on the canvas or not
+    showTooltips: false,
+    // String - Template string for single tooltips
+    tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
 
     ///Boolean - Whether grid lines are shown across the chart
     scaleShowGridLines : true,
@@ -130,10 +125,71 @@ $(document).ready(function(){
     datasetFill : true,
 
     //String - A legend template
-    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+    // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 
   };
-  var myLineChart;
+
+/* Firebase */
+var totalcups = "00000";
+var todaycups = "000";
+var myFirebaseRef = new Firebase("https://amber-torch-2593.firebaseio.com");
+myFirebaseRef.child("coffee").orderByKey().limitToLast(1).on("child_added", function(snapshot){
+    var lastchild = snapshot.val();
+
+    var total = pad(lastchild['total'],5);
+    var daily = pad(lastchild['daily'],3);
+    var timestamp = lastchild['timestamp'];
+    var hourly = lastchild['hourly'];
+    var id = lastchild['id'];
+    totalcups = total;
+    todaycups = daily;
+
+    for (var key in hourly){
+    	var hr = key;
+    	//console.log(hr);
+    	var m1 = hourly[key].split(',')[0];
+    	var m2 = hourly[key].split(',')[1];
+    	data['datasets'][0]['data'][hr-9] = m1;
+		  data['datasets'][1]['data'][hr-9] = m2;
+      if(!flag_2)myLineChart = new Chart(ctx).Line(data,option);
+    }
+
+    $('#totalcups').numAnim({
+      endAt: totalcups,
+      duration: 1
+    });
+    $('#todaycups').numAnim({
+      endAt: todaycups,
+      duration: 1
+    });
+});
+
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+var k1 = 0;
+var k2 = 0;
+
+$(document).ready(function(){
+  var window_width = $(window).width();
+  /* Animations */
+  TweenMax.to("#section-1", 1, {marginTop:"+=30px", opacity: "1"});
+  TweenMax.to(".text-2.innovation", 1, {opacity: "1", delay: "1"});
+  TweenMax.to(".line.left", .8, {opacity: "1", left: "+=60px", delay: "1.2"});
+  TweenMax.to(".line.right", .8, {opacity: "1", right: "+=60px", delay: "1.2"});
+  $('.curved').circleType({radius: 1200});
+
+  /* Responsive */
+  moving();
+
+  $(window).on('resize', function(){
+    k1 = 60;
+    k2 = 80;
+    moving();
+  });
 
   // Progressive disclosure images
   $(window).scroll(function(){
@@ -143,58 +199,99 @@ $(document).ready(function(){
 
         /* If the object is completely visible in the window, fade it it */
         if( bottom_of_window > bottom_of_object ){
-          if($(this).attr('id')!="myChart"){
-            $(this).animate({'opacity':'1','margin-top':'-40px'},1000,'easeOutQuart', function(){
-              if($(this).attr('id')=="section-3" && flag_3){
-                TweenMax.to(".text-2.medium.left", .8, {opacity: "1", left: "+=80px"});
-                TweenMax.to(".text-2.medium.right", .8, {opacity: "1", right: "+=80px"});
-                flag_3 = false;
-                $('#totalcups').numAnim({
-                  endAt: "00378",
-                  duration: 1
-                });
-              }
-              else if($(this).attr('id')=="section-4" && flag_4){
-                $('#todaycups').numAnim({
-                  endAt: "042",
-                  duration: 1
-                });
-                flag_4 = false;
-              }
+          if($(this).attr('id')=="section-3" && flag_3){
+            TweenMax.to("#section-3", .8, {opacity: "1", marginTop: "-=40px"});
+            TweenMax.to(".text-2.medium.left", .8, {opacity: "1", left: "+=80px", delay: .8});
+            TweenMax.to(".text-2.medium.right", .8, {opacity: "1", right: "+=80px", delay: .8});
+            flag_3 = false;
+            $('#totalcups').numAnim({
+              endAt: totalcups,
+              duration: 1
             });
           }
+          else if($(this).attr('id')=="section-4" && flag_4){
+            TweenMax.to("#section-4", .8, {opacity: "1", marginTop: "-=40px"});
+            $('#todaycups').numAnim({
+              endAt: todaycups,
+              duration: .8
+            });
+            flag_4 = false;
+          }
         }
-        else if(bottom_of_window > $(this).position().top + $(this).outerHeight()/3*2 && $(this).attr('id')=="myChart" && flag2){
-          myLineChart = new Chart(ctx).Line(data,option);
-          console.log("update");
-          flag2 = false;
+        else if(bottom_of_window >= $(this).position().top + $(this).outerHeight()/6*5){
+          if($(this).attr('id')=="myChart" && flag_2){
+            myLineChart = new Chart(ctx).Line(data,option);
+            flag_2 = false;
+          }
+        }
+        else if(bottom_of_window >= $(this).position().top + $(this).outerHeight()/2){
+          if($(this).attr('id')=="machines" && flag_5){
+            if($(window).width()>=991){
+              TweenMax.to("#machine-1", .8, {opacity: "1", marginLeft: "+=180px", ease:Power1.easeInOut});
+              TweenMax.to("#machine-2", .8, {opacity: "1", marginRight: "+=180px", ease:Power1.easeInOut});
+            }
+            else {
+              $('#machine-1').css('margin-left', 'auto');
+              $('#machine-2').css('margin-right', 'auto');
+              TweenMax.to("#machine-1, #machine-2", .8, {opacity: "1", ease:Power1.easeInOut});
+            }
+            flag_5 = false;
+          }
         }
     });
   });
 });
+var shrink = true;
+var enlarge = true;
 
 function moving(){
-
-
+  var window_width = $(window).width();
+  if(window_width>1024) {
+    $('#section-5').height($('#machine-1').height()+100);
+  }
+  else {
+    $('#section-5').height($('#machine-1').height()*2+100);
+    $('#machine-1').css('margin-left', 'auto');
+    $('#machine-2').css('margin-right', 'auto');
+    if(window_width<767){
+      enlarge = true;
+      if(shrink){
+        option['scaleFontSize'] =  16;
+        option['pointDotRadius'] = 3;
+        myLineChart = new Chart(ctx).Line(data,option);
+        shrink = false;
+      }
+    }
+    else{
+      shrink = true;
+      if(enlarge){
+        option['scaleFontSize'] =  32;
+        option['pointDotRadius'] = 6;
+        myLineChart = new Chart(ctx).Line(data,option);
+        enlarge = false;
+      }
+    }
+  }
   var h1m = $('.text-1.medium').height();
-  var w1m = $('.text-1.medium').width();
+  var w2i = $('.text-2.innovation').width();
   $('.total').css('margin-bottom', h1m/5*-1);
 
   var h1l = $('.text-1.large').height();
   $('.text-1.large').css('margin-bottom', h1l/5*-1);
 
-  //$('.text-2.medium.left').css('margin-right',w1m+60+$('.text-2.medium.left').width());
-  //$('.text-2.medium.right').css('margin-left',w1m+60);
   $('.text-2.medium.left, .text-2.medium.right').css('margin-top', h1m/2.5);
+  $('.text-2.medium.left').css('left', window_width/2-$('#totalcups').width()/2-$('.text-2.medium.left').width()-100+k1);
+  $('.text-2.medium.right').css('right', window_width/2-$('#totalcups').width()/2-$('.text-2.medium.right').width()-100+k1);
+
   $('#section-3').css('height', h1m);
 
   $('.line').css('margin-top', $('.innovation').height()/2);
-  $('.line.left').css('margin-right',w1m+50);
-  $('.line.right').css('margin-left',w1m-15+50);
-
-  $('#coffee').css('padding-top', h1m+h1l);
+  $('.line.left').css('left', window_width/2-$('.innovation span').width()/2-$('.line').width()-100+k1);
+  $('.line.right').css('right', window_width/2-$('.innovation span').width()/2-$('.line').width()-100+k1);
+  $('#coffee').css('padding-top', h1m+h1l-40);
 }
 
+/* Scrambling Numbers */
 (function($){
     $.fn.extend({
         numAnim: function(options) {
