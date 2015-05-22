@@ -221,14 +221,15 @@ $(document).ready(function(){
         else if(bottom_of_window >= $(this).position().top + $(this).outerHeight()/6*5){
           if($(this).attr('id')=="myChart" && flag_2){
             myLineChart = new Chart(ctx).Line(data,option);
+            TweenMax.to("#myChart", .8, {opacity: "1"});
             flag_2 = false;
           }
         }
         else if(bottom_of_window >= $(this).position().top + $(this).outerHeight()/2){
           if($(this).attr('id')=="machines" && flag_5){
             if($(window).width()>=991){
-              TweenMax.to("#machine-1", .8, {opacity: "1", marginLeft: "+=180px", ease:Power1.easeInOut});
-              TweenMax.to("#machine-2", .8, {opacity: "1", marginRight: "+=180px", ease:Power1.easeInOut});
+              TweenMax.to("#machine-1", .8, {opacity: "1", marginLeft: "+=120px", ease:Power1.easeInOut});
+              TweenMax.to("#machine-2", .8, {opacity: "1", marginRight: "+=120px", ease:Power1.easeInOut});
             }
             else {
               $('#machine-1').css('margin-left', 'auto');
@@ -246,11 +247,7 @@ var enlarge = true;
 
 function moving(){
   var window_width = $(window).width();
-  if(window_width>1024) {
-    $('#section-5').height($('#machine-1').height()+100);
-  }
-  else {
-    $('#section-5').height($('#machine-1').height()*2+100);
+  if(window_width < 1024) {
     $('#machine-1').css('margin-left', 'auto');
     $('#machine-2').css('margin-right', 'auto');
     if(window_width<767){
