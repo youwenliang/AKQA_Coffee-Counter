@@ -1,0 +1,3 @@
+[submodule "coffeecounter-pi/SmartNixieTube"]
+	path = coffeecounter-pi/SmartNixieTube
+	url = https://github.com/hackabletype/SmartNixieTube.git
