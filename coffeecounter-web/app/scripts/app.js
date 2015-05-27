@@ -134,6 +134,10 @@ myFirebaseRef.child("coffee").orderByKey().limitToLast(1).on("child_added", func
     totalcups = total;
     todaycups = daily;
 
+    var date_obj = {};
+    date_obj[$.datepicker.formatDate('yy-mm-dd', new Date())] = hourly;
+    myFirebaseRef.child("coffee/-Date").update(date_obj);
+
     for (var key in hourly){
     	var hr = key;
     	//console.log(hr);
