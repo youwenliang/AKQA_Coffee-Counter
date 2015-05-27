@@ -32,17 +32,7 @@ angular.module('coffeecounterWebApp', [
     labels: ["9 A M", "1 0 A M", "1 1 A M", "1 2 P M", "1 P M", "2 P M", "3 P M", "4 P M", "5 P M", "6 P M", "7 P M", "8 P M"],
     datasets: [
         {
-            label: "Coffee Counter I",
-            fillColor: "rgba(255, 255, 255, 0.8)",
-            strokeColor: "rgba(255,255,255,1)",
-            pointColor: "rgba(255,255,255,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(255,255,255,1)",
-            data: [0,0,0,0,0,0,0,0,0,0,0,0]
-        },
-        {
-            label: "Coffee Counter II",
+            label: "Coffee Counter",
             fillColor: "rgba(255, 255, 255, 0.8)",
             strokeColor: "rgba(255,255,255,1)",
             pointColor: "rgba(255,255,255,1)",
@@ -149,8 +139,7 @@ myFirebaseRef.child("coffee").orderByKey().limitToLast(1).on("child_added", func
     	//console.log(hr);
     	var m1 = hourly[key].split(',')[0];
     	var m2 = hourly[key].split(',')[1];
-    	data['datasets'][0]['data'][hr-9] = m1;
-		  data['datasets'][1]['data'][hr-9] = m2;
+    	data['datasets'][0]['data'][hr-9] = parseInt(m1)+parseInt(m2);
       if(!flag_2)myLineChart = new Chart(ctx).Line(data,option);
     }
 
