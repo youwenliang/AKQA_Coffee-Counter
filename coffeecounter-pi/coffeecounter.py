@@ -4,7 +4,7 @@ __copyright__ = 'Copyright 2014 AKQA inc. All Rights Reserved'
 
 # from time import sleep
 
-from SmartNixieTube import SmartNixieTubeDisplay
+from SmartNixieTube.SmartNixieTube import SmartNixieTubeDisplay
 import time
 import datetime
 
