@@ -23,7 +23,7 @@ display.blue = 255  # random.randint(0,255)
 GPIO_TRIGGER = [22, 17]
 GPIO_ECHO = [27, 4]
 
-TIMEOUT = 0
+TIMEOUT = 10  # Cup stays over 10 seconds
 
 # from Adafruit_CharLCD import Adafruit_CharLCD  # 1
 
