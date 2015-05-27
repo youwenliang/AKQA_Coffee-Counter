@@ -4,20 +4,28 @@ __copyright__ = 'Copyright 2014 AKQA inc. All Rights Reserved'
 
 # from time import sleep
 
+from SmartNixieTube import SmartNixieTubeDisplay
 import time
 import datetime
 
 from firebase import firebase
-
 import RPi.GPIO as GPIO
 
-# Define GPIO to use on Pi
+# Initialize Smart Nixie Tube Display
+numberOfTubesInDisplay = 3
+display = SmartNixieTubeDisplay(numberOfTubesInDisplay, '/dev/tty.usbserial-A9QHHRFJ')  # '/dev/tty.usbserial-A9UD9RRV')
+display.brightness = 255
+display.red = 255  # random.randint(0,255)
+display.green = 255  # random.randint(0,255)
+display.blue = 255  # random.randint(0,255)
+
+# Define GPIO to use on Pi [CoffeeCounter_Pin1, CoffeeCounter_Pin2]
 GPIO_TRIGGER = [22, 17]
 GPIO_ECHO = [27, 4]
 
 TIMEOUT = 0
 
-from Adafruit_CharLCD import Adafruit_CharLCD  # 1
+# from Adafruit_CharLCD import Adafruit_CharLCD  # 1
 
 
 class CoffeeCounter(object):
@@ -29,7 +37,7 @@ class CoffeeCounter(object):
     _reset = False
     _id = 0
 
-    _lcd = Adafruit_CharLCD() # 2
+    # _lcd = Adafruit_CharLCD() # 2
 
     def __init__(self, machineID):  # global
         """this is the set-up phase, get things ready!"""
@@ -54,12 +62,12 @@ class CoffeeCounter(object):
         GPIO.setup(GPIO_ECHO[self._id - 1], GPIO.IN)  # Echo
 
         # 3
-        self._lcd.begin(16, 2)
-        self._lcd.clear()
-        self._lcd.message('AKQA JavaCounter\n')
-
-        self._lcd.setCursor(0, 1)
-        self._lcd.message('                ')
+        # self._lcd.begin(16, 2)
+        # self._lcd.clear()
+        # self._lcd.message('AKQA JavaCounter\n')
+        #
+        # self._lcd.setCursor(0, 1)
+        # self._lcd.message('                ')
 
     def _getSensorValue(self, id_num):  # individual function
         # Set trigger to False (Low)
@@ -138,8 +146,11 @@ class CoffeeCounter(object):
 
             result = self.__firebase.post('/coffee', coffeeJson)
 
-            self._lcd.setCursor(0, 1)
-            self._lcd.message('Count {:d}\n'.format(self._dailyCoffeeCount[0]))
+            display.setDisplayNumber(self._dailyCoffeeCount[0])
+            display.sendCommand()
+
+            # self._lcd.setCursor(0, 1)
+            # self._lcd.message('Count {:d}\n'.format(self._dailyCoffeeCount[0]))
 
         if 2.5 < sensorVal < 5:
             self._cupPresent = True
