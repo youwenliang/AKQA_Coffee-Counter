@@ -13,7 +13,7 @@ import RPi.GPIO as GPIO
 
 # Initialize Smart Nixie Tube Display
 numberOfTubesInDisplay = 3
-display = SmartNixieTubeDisplay(numberOfTubesInDisplay, '/dev/tty.usbserial-A9QHHRFJ')  # '/dev/tty.usbserial-A9UD9RRV')
+display = SmartNixieTubeDisplay(numberOfTubesInDisplay, '/dev/ttyUSB0')  # '/dev/tty.usbserial-A9UD9RRV')
 display.brightness = 255
 display.red = 255  # random.randint(0,255)
 display.green = 255  # random.randint(0,255)

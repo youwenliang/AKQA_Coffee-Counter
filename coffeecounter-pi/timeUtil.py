@@ -18,7 +18,7 @@ nistPort = 37
 nistHost = socket.gethostbyname(nistHostName)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.sendto('', (nistHost, nistPort))
+s.sendto(b'', (nistHost, nistPort))
 
 
 class TimeUtil(object):
