@@ -7,6 +7,7 @@ __copyright__ = 'Copyright 2014 AKQA inc. All Rights Reserved'
 from SmartNixieTube.SmartNixieTube import SmartNixieTubeDisplay
 import time
 import datetime
+import random
 
 from firebase import firebase
 import RPi.GPIO as GPIO
@@ -23,7 +24,7 @@ display.blue = 255  # random.randint(0,255)
 GPIO_TRIGGER = [22, 17]
 GPIO_ECHO = [27, 4]
 
-TIMEOUT = 10  # Cup stays over 10 seconds
+TIMEOUT = 1  # Cup stays over 10 seconds
 
 # from Adafruit_CharLCD import Adafruit_CharLCD  # 1
 
@@ -130,7 +131,7 @@ class CoffeeCounter(object):
                 self._reset = False
 
                 # count the coffees! (check for the light, and increment the counter when it goes off.
-        if self._cupPresent and (sensorVal > 5 or sensorVal < 2.5) and self._timer > TIMEOUT:
+        if self._cupPresent and (sensorVal > 5 or sensorVal < 2) and self._timer > TIMEOUT:
             self.incrementDailyCoffeeCount(self._id)
 
             # send the info to the backend
@@ -146,13 +147,24 @@ class CoffeeCounter(object):
 
             result = self.__firebase.post('/coffee', coffeeJson)
 
+            for i in range(10):
+                for tube in display.tubes:
+                    tube.red = random.randint(1, 255)
+                    tube.green = random.randint(1, 255)
+                    tube.blue = random.randint(1, 255)
+                display.setDisplayNumber(random.randint(0, 999))
+                display.sendCommand()
+
+            display.red = 255
+            display.green = 255
+            display.blue = 255
             display.setDisplayNumber(self._dailyCoffeeCount[0])
             display.sendCommand()
 
             # self._lcd.setCursor(0, 1)
             # self._lcd.message('Count {:d}\n'.format(self._dailyCoffeeCount[0]))
 
-        if 2.5 < sensorVal < 5:
+        if 2 < sensorVal < 5:
             self._cupPresent = True
             self._timer += 1
         else:
