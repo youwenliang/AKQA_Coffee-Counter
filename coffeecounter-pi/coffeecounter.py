@@ -130,23 +130,11 @@ class CoffeeCounter(object):
             if datetime.datetime.now().minute == 1:
                 self._reset = False
 
-                # count the coffees! (check for the light, and increment the counter when it goes off.
+        # count the coffees! (check for the light, and increment the counter when it goes off.
         if self._cupPresent and (sensorVal > 5 or sensorVal < 2) and self._timer > TIMEOUT:
             self.incrementDailyCoffeeCount(self._id)
 
-            # send the info to the backend
-            timestamp = str(datetime.datetime.now())
-            hr = str(datetime.datetime.now().hour)
-            self._objHr[hr] = str(self._dailyCoffeeCount[1])+','+str(self._dailyCoffeeCount[2])
-            coffeeJson = {'daily': self._dailyCoffeeCount[0],
-                          'hourly': self._objHr,
-                          'id': self._id,
-                          'timestamp': timestamp,
-                          'total': self._totalCoffeeCount
-            }
-
-            result = self.__firebase.post('/coffee', coffeeJson)
-
+            # update display
             for i in range(10):
                 for tube in display.tubes:
                     tube.red = random.randint(1, 255)
@@ -160,6 +148,19 @@ class CoffeeCounter(object):
             display.blue = 255
             display.setDisplayNumber(self._dailyCoffeeCount[0])
             display.sendCommand()
+
+            # send the info to the backend
+            timestamp = str(datetime.datetime.now())
+            hr = str(datetime.datetime.now().hour)
+            self._objHr[hr] = str(self._dailyCoffeeCount[1])+','+str(self._dailyCoffeeCount[2])
+            coffeeJson = {'daily': self._dailyCoffeeCount[0],
+                          'hourly': self._objHr,
+                          'id': self._id,
+                          'timestamp': timestamp,
+                          'total': self._totalCoffeeCount
+            }
+
+            result = self.__firebase.post('/coffee', coffeeJson)
 
             # self._lcd.setCursor(0, 1)
             # self._lcd.message('Count {:d}\n'.format(self._dailyCoffeeCount[0]))
